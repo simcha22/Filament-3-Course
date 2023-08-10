@@ -14,11 +14,13 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-         \App\Models\User::create([
-             'name' => 'Simcha',
-             'email' => 'simcha@gmail.com',
-             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-             'is_admin' => true
-         ]);
+//         \App\Models\User::create([
+//             'name' => 'Simcha',
+//             'email' => 'simcha@gmail.com',
+//             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+//             'is_admin' => true
+//         ]);
+
+        \App\Models\Product::factory(10)->create();
     }
 }
