@@ -29,6 +29,14 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->rule('numeric'),
+                Forms\Components\Radio::make('status')
+                    ->options([
+                        'in stock' => 'in stock',
+                        'sold out' => 'sold out',
+                        'coming soon' => 'coming soon',
+                    ]),
+                Forms\Components\Select::make('category_id')
+                    ->relationship('category', 'name'),
             ]);
     }
 
@@ -41,7 +49,13 @@ class ProductResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->money('usd')
+                    ->getStateUsing(function (Product $record): float {
+                        return $record->price / 100;
+                    }),
+                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('category.name'),
             ])
             ->filters([
                 //
