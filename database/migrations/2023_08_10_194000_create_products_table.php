@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('status',
                 ['in stock', 'sold out', 'coming soon'])
                 ->default('in stock');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
