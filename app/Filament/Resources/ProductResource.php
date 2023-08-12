@@ -8,6 +8,7 @@ use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -58,10 +59,22 @@ class ProductResource extends Resource
                     ->money('usd')
                     ->getStateUsing(function (Product $record): float {
                         return $record->price / 100;
+                    })
+                    ->alignment(Alignment::End),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'in stock' => 'primary',
+                        'sold out' => 'danger',
+                        'coming soon' => 'info',
                     }),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('category.name'),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Category name'),
                 Tables\Columns\TextColumn::make('tags.name'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime(),
+                //->since(),
+                //->dateTime('m/d/Y H:i'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
