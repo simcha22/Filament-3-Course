@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
 //             'is_admin' => true
 //         ]);
 
-        \App\Models\Product::factory(10)->create();
+      //  \App\Models\Product::factory(10)->create();
     }
 }

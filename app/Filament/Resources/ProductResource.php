@@ -37,6 +37,9 @@ class ProductResource extends Resource
                     ]),
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name'),
+                Forms\Components\Select::make('tags')
+                    ->relationship('tags', 'name')
+                    ->multiple(),
             ]);
     }
 
@@ -56,6 +59,7 @@ class ProductResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('category.name'),
+                Tables\Columns\TextColumn::make('tags.name'),
             ])
             ->filters([
                 //
@@ -78,7 +82,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TagsRelationManager::class,
         ];
     }
 
