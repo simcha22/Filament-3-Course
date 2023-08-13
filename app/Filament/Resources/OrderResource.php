@@ -18,13 +18,16 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                
+
             ]);
     }
 
@@ -103,5 +106,10 @@ class OrderResource extends Resource
             'create' => Pages\CreateOrder::route('/create'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return Order::whereDate('created_at', today())->count() ? 'NEW' : '';
     }
 }
