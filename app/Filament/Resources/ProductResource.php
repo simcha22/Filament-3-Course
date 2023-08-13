@@ -39,9 +39,9 @@ class ProductResource extends Resource
 //                    Forms\Components\Tabs\Tab::make('Main data')
 //                        ->schema([
 
-                            Forms\Components\Wizard::make([
-                                Forms\Components\Wizard\Step::make('Main data')
-                                    ->schema([
+                Forms\Components\Wizard::make([
+                    Forms\Components\Wizard\Step::make('Main data')
+                        ->schema([
                             Forms\Components\TextInput::make('name')
                                 ->required()
                                 ->unique(ignoreRecord: true),
@@ -52,7 +52,7 @@ class ProductResource extends Resource
                     //Forms\Components\Section::make('Additional data')
                     //Forms\Components\Fieldset::make('Additional data')
                     //Forms\Components\Tabs\Tab::make('Additional data')
-                        Forms\Components\Wizard\Step::make('Additional data')
+                    Forms\Components\Wizard\Step::make('Additional data')
                         ->schema([
                             Forms\Components\Radio::make('status')
                                 ->options(self::$statuses),
@@ -95,8 +95,10 @@ class ProductResource extends Resource
 //                    }),
                 Tables\Columns\SelectColumn::make('status')
                     ->options(self::$statuses),
-                //Tables\Columns\ToggleColumn::make('is_active'),
-                Tables\Columns\CheckboxColumn::make('is_active'),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->onColor('primary') // default value: "primary"
+                    ->offColor('danger'),
+                //Tables\Columns\CheckboxColumn::make('is_active'),
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Category name'),
                 Tables\Columns\TextColumn::make('tags.name'),
