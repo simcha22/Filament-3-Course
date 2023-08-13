@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('price');
             $table->foreignId('product_id')->references('id')->on('products');
             $table->foreignId('user_id')->references('id')->on('users');
+            $table->boolean('is_completed')->default(false);
             $table->timestamps();
         });
     }
