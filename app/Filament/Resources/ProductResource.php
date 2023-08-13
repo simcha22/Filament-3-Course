@@ -30,20 +30,41 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->unique(ignoreRecord: true),
-                Forms\Components\TextInput::make('price')
-                    ->required()
-                    ->rule('numeric'),
-                Forms\Components\Radio::make('status')
-                    ->options(self::$statuses),
-                Forms\Components\Select::make('category_id')
-                    ->relationship('category', 'name'),
-                Forms\Components\Select::make('tags')
-                    ->relationship('tags', 'name')
-                    ->multiple(),
-            ]);
+//                Forms\Components\Section::make('Main data')
+//                    ->description('What users totally need to fill in')
+//                    ->schema([
+//                Forms\Components\Tabs::make()->tabs([
+//                    Forms\Components\Tabs\Tab::make('Main data')
+//                        ->schema([
+
+                            Forms\Components\Wizard::make([
+                                Forms\Components\Wizard\Step::make('Main data')
+                                    ->schema([
+                            Forms\Components\TextInput::make('name')
+                                ->required()
+                                ->unique(ignoreRecord: true),
+                            Forms\Components\TextInput::make('price')
+                                ->required()
+                                ->rule('numeric'),
+                        ]),
+                    //Forms\Components\Section::make('Additional data')
+                    //Forms\Components\Fieldset::make('Additional data')
+                    //Forms\Components\Tabs\Tab::make('Additional data')
+                        Forms\Components\Wizard\Step::make('Additional data')
+                        ->schema([
+                            Forms\Components\Radio::make('status')
+                                ->options(self::$statuses),
+                            Forms\Components\Select::make('category_id')
+                                ->relationship('category', 'name'),
+                        ]),
+//                Forms\Components\Select::make('tags')
+//                    ->relationship('tags', 'name')
+//                    ->multiple(),
+                ]),
+                Forms\Components\RichEditor::make('description')
+                    ->columnSpanFull()
+                    ->required(),
+            ])->columns(2);
     }
 
     public static function table(Table $table): Table
@@ -52,7 +73,7 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextInputColumn::make('name')
                     ->rules(['required', 'min:3'])
-            //Tables\Columns\TextColumn::make('name')
+                    //Tables\Columns\TextColumn::make('name')
                     ->searchable(isIndividual: true, isGlobal: true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')
